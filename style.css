@@ -10,7 +10,7 @@ body {
 .top-image {
   position: relative;
   width: 100vw;
-  height: 720px;
+  height: 820px;
   overflow: hidden;
   background: #0a174e;
   box-shadow: 0 4px 24px rgba(10, 23, 78, 0.18);
@@ -19,7 +19,7 @@ body {
 
 .top-image img {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
   display: block;
   margin: 0;
@@ -30,7 +30,7 @@ body {
 
 .logo-bar {
   position: absolute;
-  top: 10px;
+  top: 100px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -47,20 +47,20 @@ body {
 }
 
 .logo-img {
-  height: 28px !important;
-  width: 28px !important;
+  height: 50px !important;
+  width: 50px !important;
   object-fit: contain;
-  margin-right: 12px;
+  margin-right: 1px;
+  align-items: center;
   background: transparent;
-  display: block;
 }
 
 .logo-text {
   font-family: 'Montserrat', Arial, sans-serif;
-  font-size: 1.6em;
+  font-size: 3em;
   color: #070580;
   letter-spacing: 2px;
-  font-weight: 800;
+  font-weight: 1000;
   vertical-align: middle;
   line-height: 1;
   text-shadow: 2px 2px 8px #afafac, 0 0 4px #000; /* 添加阴影 */
@@ -94,24 +94,24 @@ body {
 }
 
 .blur-header {
-  position: sticky;
-  top: 0;
+  position: below the top-image;
+  margin-top: 50px;
   width: 100%;
   background: rgba(10,23,78,0.7);
   backdrop-filter: blur(12px);
   text-align: center;
-  font-size: 2em;
+  font-size: 3.2em;
   font-family: 'Montserrat', Arial, sans-serif;
   color: #fff;
   padding: 18px 0 10px 0;
   z-index: 20;
   box-shadow: 0 2px 12px rgba(10, 23, 78, 0.12);
   letter-spacing: 2px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .main-content {
-  max-width: 600px;
+  max-width: 1500px;
   margin: 0 auto;
   padding: 32px 0;
   z-index: 5;
@@ -135,7 +135,7 @@ body {
   color: #fff;
   text-decoration: none;
   font-weight: 700;
-  font-size: 1.15em;
+  font-size: 2.15em;
   text-align: center;
   transition: 
     background 0.2s,
@@ -176,15 +176,59 @@ body {
   margin-bottom: 14px;
   font-family: 'Montserrat', Arial, sans-serif;
   font-weight: 700;
-  font-size: 1.4em;
+  font-size: 3em;
+  text-align: center;
 }
 
 .section p, .section ul, .section li {
   font-family: 'Montserrat', Arial, sans-serif;
-  font-size: 1.2em;
+  font-size: 2em;
   font-style: italic;
-  line-height: 1.5em;
-  color: #fff;
+  font-weight: bold;
+  line-height: 2em;
+  color: #ffffff;
+}
+
+p{
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+x{
+  font-size: 1.3em;
+  font-weight: 500;
+  line-height: 1.8em;
+  font-style: italic;
+  font-weight: bold;
+  font-family: 'Times New Roman';
+  color: gold;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+.y{
+  font-size: 1.3em;
+  font-weight: 500;
+  line-height: 1.8em;
+  font-style: italic;
+  font-weight: bold;
+  font-family: 'Times New Roman';
+  color: lightblue;
+}
+
+.y{ 
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+.joinus{
+  text-align: center;
+  font-size: 2.5em;
+  font-style: "Times New Roman";
+  font-weight: 700;
+  color: #ffd900;
+  margin-top: 0;
+  margin-bottom: 30px;
 }
 
 @keyframes fadeIn {
