@@ -8,13 +8,13 @@ body {
 }
 
 .top-image {
-  position: relative;
-  width: 100vw;
+  /* 原有属性保留 */
+  position: absolute;
+  max-width: 100%;
   height: auto;
-  overflow: hidden;
-  background: #0a174e;
-  box-shadow: 0 4px 24px rgba(10, 23, 78, 0.18);
-  display: block;
+  /* 新增水平居中逻辑 */
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .top-image img {
@@ -108,11 +108,11 @@ body {
   z-index: 20;
   box-shadow: 0 2px 12px rgba(10, 23, 78, 0.12);
   letter-spacing: 2px;
-  font-weight: 800;
+  font-weight: 1000;
 }
 
 .main-content {
-  max-width: 1500px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 32px 0;
   z-index: 5;
@@ -391,7 +391,7 @@ h2 {
 /* 轮播容器：控制整体尺寸和溢出隐藏 */
 .image-carousel {
   width: 100%;
-  height: 780px; /* 轮播图高度，可根据需求调整 */
+  height: 850px; /* 轮播图高度，可根据需求调整 */
   position: relative; /* 为绝对定位的图片做参考 */
   margin-top: 30px; /* 与上方文字的间距 */
 }
@@ -462,7 +462,7 @@ h2 {
 
 /* 单个成员项样式 */
 .member-item {
-  width: 280px;
+  width: 300px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
