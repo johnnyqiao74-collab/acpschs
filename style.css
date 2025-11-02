@@ -27,53 +27,83 @@ body {
   z-index: 1;
 }
 
-/* ...existing code... */
-
 .logo-bar {
   position: absolute;
-  top: 100px;
+  top: 28px;                /* 顶部偏下，可微调 */
   left: 50%;
   transform: translateX(-50%);
+  z-index: 60;              /* 确保在 blur-header 之上 */
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  gap: 8px;
   background: none;
+  padding: 0;
+  pointer-events: auto;
 }
 
+/* logo-link 基本交互容器 */
 .logo-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   text-decoration: none;
+  color: inherit;
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1), filter 180ms ease;
+  transform-origin: center;
+  will-change: transform, filter;
 }
 
+/* logo-img：尺寸受控 + 常态动画（浮动 + 脉冲） */
 .logo-img {
-  height: 50px !important;
-  width: 50px !important;
+  height: 150px !important;      /* 调整为合适大小（24/28/36 可试） */
+  width: auto !important;
   object-fit: contain;
-  margin-right: 1px;
-  align-items: center;
-  background: transparent;
+  display: block;
+  opacity: 0.86;
+  transition: opacity 160ms ease, transform 180ms ease, filter 180ms ease;
+  animation: logo-float 6.8s ease-in-out infinite, logo-pulse 5.6s ease-in-out infinite;
 }
 
-.logo-text {
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-size: 3em;
-  color: #070580;
-  letter-spacing: 2px;
-  font-weight: 1000;
-  vertical-align: middle;
-  line-height: 1;
-  text-shadow: 2px 2px 8px #afafac, 0 0 4px #000; /* 添加阴影 */
-  transition: color 0.2s, text-shadow 0.2s;
+/* 悬停/聚焦：暂停常态动画并突出效果 */
+.logo-link:hover .logo-img,
+.logo-link:focus .logo-img {
+  transform: translateY(-8px) scale(1.12) rotate(-1deg);
+  opacity: 1;
+  filter: drop-shadow(0 12px 30px rgba(0,0,0,0.45)) saturate(1.08);
+  animation-play-state: paused;
 }
 
-.logo-link:hover .logo-text {
-  color: #ffd700;
-  text-shadow: 2px 2px 12px #d8d8db, 0 0 8px #dfdfdf;
+/* 点击反馈 */
+.logo-link:active .logo-img {
+  transform: translateY(-4px) scale(1.06);
+  transition-duration: 120ms;
 }
 
-/* ...existing code... */
+/* 关键帧：轻微上下漂浮 */
+@keyframes logo-float {
+  0%   { transform: translateY(0) scale(1); }
+  25%  { transform: translateY(-3px) scale(1.01); }
+  50%  { transform: translateY(0) scale(1); }
+  75%  { transform: translateY(3px) scale(0.995); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* 关键帧：缓慢脉冲（透明度与轻阴影） */
+@keyframes logo-pulse {
+  0%   { filter: none; opacity: 0.86; }
+  50%  { filter: drop-shadow(0 6px 14px rgba(255,215,0,0.06)); opacity: 0.92; }
+  100% { filter: none; opacity: 0.86; }
+}
+
+/* 尊重用户无动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .logo-img {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
 
 /* 渐变模糊遮罩（底部才有模糊，且逐渐增强） */
 .top-image::after {
@@ -367,7 +397,15 @@ h2 {
   text-decoration: none;
   border-radius: 4px;
   transition: background-color 0.3s ease;
-  font-size: 25px;
+  font-size: 50px;
+}
+
+.back-link img {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  margin-left: 8px;
+
 }
 
 .back-link:hover {
@@ -388,27 +426,28 @@ h2 {
   }
 }
 
-/* 轮播容器：控制整体尺寸和溢出隐藏 */
 .image-carousel {
   width: 100%;
-  height: 850px; /* 轮播图高度，可根据需求调整 */
-  position: relative; /* 为绝对定位的图片做参考 */
-  margin-top: 30px; /* 与上方文字的间距 */
+  aspect-ratio: 16 / 9;    /* 容器按 16:9 比例缩放，避免固定高度导致留白 */
+  max-height: 60vh;        /* 可选上限，按需调整 */
+  position: relative;
+  margin-top: 30px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.06);
 }
 
-/* 轮播图片：统一尺寸 + 绝对定位 */
+/* 图片占满容器，但使用 contain 保证上下完整可见；
+   在窄屏时图片会按比例缩小（左右缩小或留空），不会裁剪上下 */
 .carousel-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain; /* 保持图片比例，避免变形 */
   position: absolute;
-  margin: 0; 
-  padding: 0; 
-  top: 0;
-  left: 0;
-  opacity: 0; /* 初始状态：透明（不显示） */
-  animation: carousel-play 12s infinite; /* 动画名 + 持续12秒 + 无限循环 */
+  inset: 0;                /* top:0; right:0; bottom:0; left:0; */
+  width: 100%;
+  height: 100%;
+  object-fit: contain;     /* 保证完整显示（无上下裁剪） */
+  object-position: center;
+  display: block;
+  opacity: 0;
+  animation: carousel-play 12s infinite;
 }
 
 /* 每张图片的动画延迟（实现“依次显示”） */
@@ -504,4 +543,42 @@ h2 {
   line-height: 1.5;
   color: black;
   text-align: left;
+}
+
+/* Guestbook：确保留言框与输入框都能变大且响应式（替换原有错误选择器） */
+#guestbook-form textarea,
+#guestbook-form input[type="text"],
+#guestbook-form input[type="email"] {
+  width: 100% !important;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+  font-size: 1.05rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.03);
+  color: var(--white, #fff);
+  outline: none;
+}
+
+/* 专门控制留言框高度 */
+#guestbook-form textarea {
+  height: 360px !important;
+  min-height: 260px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+/* 按钮调整（可选） */
+#guestbook-form button[type="submit"] {
+  padding: 12px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+}
+
+/* 移动端微调 */
+@media (max-width: 520px) {
+  #guestbook-form textarea { height: 260px !important; min-height: 160px; }
+  #guestbook-form input[type="text"],
+  #guestbook-form input[type="email"] { font-size: 1rem; padding: 10px; }
 }
