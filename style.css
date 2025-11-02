@@ -131,7 +131,7 @@ body {
   background: rgba(10,23,78,0.7);
   backdrop-filter: blur(12px);
   text-align: center;
-  font-size: 3.2em;
+  font-size: clamp(18px, 2.6vw, 34px);
   font-family: 'Montserrat', Arial, sans-serif;
   color: #fff;
   padding: 18px 0 10px 0;
@@ -347,7 +347,7 @@ h2 {
   background: rgba(10,23,78,0.7);
   backdrop-filter: blur(12px);
   text-align: center;
-  font-size: 3.2em;
+  font-size: clamp(23px, 2.2vw, 25px);
   font-family: 'Times New Roman', Times, serif;
   color: #fff;
   padding: 18px 0 10px 0;
@@ -582,3 +582,65 @@ h2 {
   #guestbook-form input[type="text"],
   #guestbook-form input[type="email"] { font-size: 1rem; padding: 10px; }
 }
+
+/* 修正根字号，确保桌面默认大小合理 */
+html {
+  font-size: 25px; /* 桌面默认基准 */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body .main-content {
+  font-size: clamp(1rem, 1rem + 0.6vw, 1.15rem); /* 16px - ~18.4px */
+  line-height: 1.6;
+}
+
+body .section {
+  font-size: inherit; /* 继承 main-content */
+}
+
+/* 段落更易读 */
+body .section p,
+body .section ul,
+body .section li {
+  font-size: clamp(1rem, 0.9rem + 0.6vw, 1.125rem);
+  line-height: 1.6;
+}
+
+/* 标题适度放大 */
+body .section h2 {
+  font-size: clamp(1.25rem, 1rem + 2.2vw, 1.9rem);
+  line-height: 1.25;
+  margin-bottom: 0.6em;
+}
+
+body .blur-header {
+  font-size: clamp(1.5rem, 1rem + 0.5vw, 2rem);
+}
+
+
+/* 导航、按钮等次要文本 */
+.nav-menu a,
+.back-link,
+#guestbook-form button {
+  font-size: clamp(0.95rem, 0.9rem + 0.8vw, 1.05rem);
+}
+
+/* 保证移动端仍比桌面小 */
+@media (max-width: 520px) {
+  html { font-size: 15px; } /* 手机基准略小 */
+  .home-intro { font-size: clamp(1.05rem, 1rem + 1.6vw, 1.35rem); }
+}
+
+@media (max-width: 420px) {
+  body .main-content { font-size: 1rem; }
+  body .section h2 { font-size: 1.25rem; }
+}
+
+
+/* 如果有局部规则把字体强制写死为 px，优先级低时可用更具体选择器覆盖 */
+body .section p { /* 更高优先级覆盖陈旧规则 */ 
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.125rem);
+}
+
+/* ...existing code... */
