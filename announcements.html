@@ -6,36 +6,37 @@
     <link rel="stylesheet" href="style.css">
     <style>
       /* 新增CSS：设置z标签样式 */
-      z {
-        color: #000000; /* 深色文字（深灰蓝，适配navy） */
-        font-family: 'Garamond', serif; /* 保留原字体 */
+      .z {
+        color: #000000; 
+        font-family: 'Garamond', serif; 
         margin: 0;
-        font-size: 2em;
+        font-size: 1rem;
         font-weight: bold;
         padding: 0;
-        display: block; /* 保持块级元素特性，与原p标签一致 */
+        display: block; 
       }
-      
+
       /* 保留之前的通告框样式 */
       .announcement-box {
-        background-color: lab(68.81% 10.96 -48.19); 
+        background-color: lab(100% 0.01 -0.01); 
         padding: 20px;
         margin-bottom: 20px;
         border-radius: 8px;
         box-shadow: 0 2px 5px rgb(0, 0, 0);
         transition: all 0.3s ease;
         cursor: default;
+
       }
       .announcement-box:hover {
         transform: translateY(-3px);
         box-shadow: 0 5px 15px rgba(0,0,0,0.15);
       }
       .announcement-icon {
-        margin-right: 10px;
-        width: 45px;
-        height: 45px;
+        margin-right: 12px;
+        width: 80px;
+        height: 80px;
         display: block;
-        vertical-align: middle;
+        object-fit: contain;
       }
     </style>
   </head>
@@ -57,7 +58,7 @@
         <h2>Latest Announcements</h2>
         <br><br>
         <!-- 第一则通告（p标签替换为z标签） -->
-        <div class="announcement-box">
+        <div class="announcement-box" style="color:#000000">
           <img src="874-8745231_announcement-announce-icon-png-white.png" alt="Announcement Icon" class="announcement-icon">
           <br><br>
           <z>
@@ -68,9 +69,8 @@
             Welcome to the Asian Peer Support Club! We are excited to kick off the new school year with a series of events and meetings. Stay tuned for more updates!
           </z>
         </div>
-        
-        <!-- 第二则通告（p标签替换为z标签） -->
-        <div class="announcement-box">
+
+        <div class="announcement-box" style="color:#000000">
           <img src="874-8745231_announcement-announce-icon-png-white.png" alt="Announcement Icon" class="announcement-icon">
           <br><br>
           <z>
@@ -82,7 +82,7 @@
           </z>
         </div>
 
-        <div class="announcement-box">
+        <div class="announcement-box" style="color:#000000">
           <img src="874-8745231_announcement-announce-icon-png-white.png" alt="Announcement Icon" class="announcement-icon">
           <br><br>
           <z>
@@ -94,7 +94,7 @@
           </z>
         </div>
 
-        <div class="announcement-box">
+        <div class="announcement-box" style="color:#000000">
           <img src="874-8745231_announcement-announce-icon-png-white.png" alt="Announcement Icon" class="announcement-icon">
           <br><br>
           <z>
@@ -105,7 +105,18 @@
             A pretty nice guy named Maddox Cherry joined us today! Welcome to the Asian Peer Support Club! We are thrilled to have you with us. Looking forward to more participaters in the future!
           </z>
         </div>
-        
+
+        <div class="announcement-box" style="color:#000000">
+          <img src="874-8745231_announcement-announce-icon-png-white.png" alt="Announcement Icon" class="announcement-icon">
+          <br><br>
+          <z>
+            October 31, 2025
+          </z>
+          <br><br>
+          <z>
+            Since next Monday is a non-school day, the APSC meeting will not take place. Our next meeting will be held on November 10, 2025 (Monday), at lunchtime in Room 1008.
+          </z>
+        </div>
       </div>
     </div>
   </body>

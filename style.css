@@ -56,8 +56,8 @@ body {
 
 /* logo-img：尺寸受控 + 常态动画（浮动 + 脉冲） */
 .logo-img {
-  height: 150px !important;      /* 调整为合适大小（24/28/36 可试） */
-  width: auto !important;
+  height: auto !important;      /* 调整为合适大小（24/28/36 可试） */
+  width: 150px !important;
   object-fit: contain;
   display: block;
   opacity: 0.86;
@@ -101,6 +101,12 @@ body {
   .logo-img {
     animation: none !important;
     transition: none !important;
+  }
+}
+@media (max-width: 100px) {
+  .logo-img {
+    height: auto !important;
+    max-width: 100% !important;
   }
 }
 
@@ -147,6 +153,7 @@ body {
   padding: 32px 0;
   z-index: 5;
   position: relative;
+  font-size: 16px;
 }
 
 .nav-menu {
@@ -268,7 +275,7 @@ x{
 
 .joinus{
   text-align: center;
-  font-size: 2.5em;
+  font-size: 1em;
   font-style: "Times New Roman";
   font-weight: 700;
   color: #ffd900;
@@ -402,8 +409,8 @@ h2 {
 
 .back-link img {
   vertical-align: middle;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   margin-left: 8px;
 
 }
@@ -501,7 +508,7 @@ h2 {
 
 /* 单个成员项样式 */
 .member-item {
-  width: 300px;
+  width: 250px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -511,8 +518,8 @@ h2 {
 
 /* 成员头像样式（使用附件的黑色圆形图标） */
 .member-avatar {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   margin: 0 auto 15px;
   display: block;
@@ -521,7 +528,7 @@ h2 {
 /* 成员姓名样式 */
 .member-name {
   font-family: 'Montserrat', sans-serif;
-  font-size: 28px;
+  font-size: 25px;
   font-weight: 600;
   margin-bottom: 8px;
   color: #0a174e;
@@ -530,7 +537,7 @@ h2 {
 /* 成员职位样式 */
 .member-position {
   font-family: 'Montserrat', sans-serif;
-  font-size: 25px;
+  font-size: 22px;
   color: navy;
   margin-bottom: 10px;
   font-weight: bold;
@@ -539,7 +546,7 @@ h2 {
 /* 成员介绍样式 */
 .member-intro {
   font-family: 'Montserrat', sans-serif;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1.5;
   color: black;
   text-align: left;
@@ -591,7 +598,7 @@ html {
 }
 
 body .main-content {
-  font-size: clamp(1rem, 1rem + 0.6vw, 1.15rem); /* 16px - ~18.4px */
+  font-size: clamp(1.15rem, 1.05rem + 0.9vw, 1.2rem); /* 16px - ~18.4px */
   line-height: 1.6;
 }
 
@@ -603,7 +610,7 @@ body .section {
 body .section p,
 body .section ul,
 body .section li {
-  font-size: clamp(1rem, 0.9rem + 0.6vw, 1.125rem);
+  font-size: clamp(1.25rem, 1.15rem + 0.9vw, 1.5rem);
   line-height: 1.6;
 }
 
@@ -623,7 +630,7 @@ body .blur-header {
 .nav-menu a,
 .back-link,
 #guestbook-form button {
-  font-size: clamp(0.95rem, 0.9rem + 0.8vw, 1.05rem);
+  font-size: clamp(0.95rem, 0.9rem + 0.8vw, 1rem);
 }
 
 /* 保证移动端仍比桌面小 */
@@ -642,5 +649,3 @@ body .blur-header {
 body .section p { /* 更高优先级覆盖陈旧规则 */ 
   font-size: clamp(1rem, 0.9rem + 0.4vw, 1.125rem);
 }
-
-/* ...existing code... */
