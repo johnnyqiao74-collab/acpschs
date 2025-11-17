@@ -27,9 +27,93 @@
           We want to hear from you! If you have any questions, suggestions, or just want to share your thoughts, feel free to leave a message! Your feedback is important to us and helps us improve our club activities and support services. 
            </p>
            <p>
-          We assure to read every message and will reply to you via email if needed.
+          We assure to read every message and will reply to you via email if needed!
            </p>
-         <p>Click <a href="guestbook.html" target="_blank" rel="noopener noreferrer">here⎆</a> ! </p>
+           <p>
+            Leave a message below:
+           </p>
+         <section class="section" aria-labelledby="guestbook-title">
+      <h2 id="guestbook-title">Message Board</h2>
+
+      <form id="guestbook-form" novalidate>
+        <label for="name">Name (Optional)</label><br />
+        <input type="text" id="name" name="name" maxlength="60" placeholder="Your name" />
+
+        <br /><br />
+        <label for="email">Email (Optional)</label><br />
+        <input type="email" id="email" name="email" maxlength="120" placeholder="you@example.com" />
+
+        <br /><br />
+        <label for="message">Message (Required)</label><br />
+        <textarea id="message" name="message" rows="12" required maxlength="2000" placeholder="Write your message here..."></textarea>
+
+        <br /><br />
+        <button id="gb-submit" type="submit">Submit Message</button>
+        <div id="gb-status" aria-live="polite" style="margin-top:12px"></div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbySK4gSDWQMBw97-sDtdjJzV9nmzsq9inX1wQWW0KDNT1BpOg-yyS7XAWeD7x5s3d4/exec"; // replace if needed
+      const form = document.getElementById("guestbook-form");
+      const status = document.getElementById("gb-status");
+      const submitBtn = document.getElementById("gb-submit");
+
+      function setStatus(msg, isError) {
+        status.textContent = msg;
+        status.style.color = isError ? "#ffb3b3" : "";
+      }
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("message").value.trim();
+
+        if (!message) {
+          setStatus("Please fill in the message content.", true);
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting…";
+        setStatus("Submitting…");
+
+        try {
+          // Use URLSearchParams to avoid preflight CORS
+          const body = new URLSearchParams({ name, email, message }).toString();
+          const res = await fetch(WEBAPP_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+            body,
+          });
+
+          let data;
+          try {
+            data = await res.json();
+          } catch (err) {
+            throw new Error("Invalid JSON response from server.");
+          }
+
+          if (res.ok && data && data.result === "success") {
+            setStatus("Submission successful, thank you for your message!");
+            form.reset();
+          } else {
+            console.error("Server response:", data);
+            setStatus("Submission failed, please try again later.", true);
+          }
+        } catch (err) {
+          console.error(err);
+          setStatus("Submission failed, network or server error.", true);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Submit Message";
+        }
+      });
+    })();
+  </script>
       </div>
   </div> 
   </body>
