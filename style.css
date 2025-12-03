@@ -653,3 +653,32 @@ body .blur-header {
 body .section p { /* 更高优先级覆盖陈旧规则 */ 
   font-size: clamp(1rem, 0.9rem + 0.4vw, 1.125rem);
 }
+
+/* 社交图标容器：水平居中并控制间距 */
+.social-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;           /* 水平间距，按需调整 */
+  margin: 12px 0;
+}
+
+/* 默认图标尺寸（可被下面具体选择器覆盖） */
+.social-row img {
+  display: block;
+  width: auto;
+  max-width: 60px;
+  height: auto;
+}
+
+/* 单独调整 Instagram 图（根据 alt 或位置选择） */
+.social-row img[alt="Instagram"] {
+  max-width: 50px;
+  width: 50px !important;   /* 如有 inline width，可用 !important 覆盖 */
+}
+
+/* 单独调整 Gmail 图（根据 alt） */
+.social-row img[alt="gmail"] {
+  max-width: 75px;
+  width: 75px !important;
+}
