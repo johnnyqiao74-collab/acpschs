@@ -5,8 +5,130 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Asian Peer Support Club</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+/* ====== Popup Overlay (Background) ====== */
+#popupOverlay {
+  display: none; /* JS 会 set to "flex" */
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45); /* 半透明黑遮罩 */
+  backdrop-filter: blur(6px); /* 背景模糊 */
+  z-index: 1000;
+  display: flex;            /* 当 JS 切换为 flex 时，这些 flex 属性会生效 */
+  justify-content: center;
+  align-items: center;
+  padding: 20px;            /* 保证移动端有内边距 */
+  box-sizing: border-box;
+}
+
+/* ====== Popup Box ====== */
+#popupBox {
+  background: rgba(255, 255, 255, 0.88); /* 半透明白色毛玻璃 */
+  backdrop-filter: blur(10px);
+  border-radius: 18px;
+  padding: 20px;
+  width: min(92%, 440px); /* 最大宽度 440px，移动端 92% */
+  max-height: 88vh;
+  overflow-y: auto;
+  box-shadow: 0 12px 40px rgba(9, 30, 66, 0.18);
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+  animation: popupFadeIn 0.34s cubic-bezier(.2,.9,.2,1);
+  box-sizing: border-box;
+}
+
+/* ====== Fade-in Animation ====== */
+@keyframes popupFadeIn {
+  from { opacity: 0; transform: translateY(6px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ====== Title ====== */
+#popupBox h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #222;
+  text-align: center;
+}
+
+/* ====== Description Text ====== */
+#popupBox p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: #444;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+/* ====== Poster Image (Below Text) ====== */
+#popupImg {
+  width: 100%;
+  height: auto;
+  max-height: 50vh;      /* 限制图片最大高度，避免过高 */
+  object-fit: cover;
+  border-radius: 12px;
+  margin-top: 10px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 26px rgba(9, 30, 66, 0.12);
+  display: block;
+}
+
+/* ====== Buttons Container ====== */
+#popupButtons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+/* ====== Buttons ====== */
+#popupClose, #learnMoreBtn {
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+/* Close button */
+#popupClose {
+  background-color: #f0f0f0;
+  color: #222;
+}
+#popupClose:hover { background-color: #e6e6e6; }
+
+/* Learn More button */
+#learnMoreBtn {
+  background-color: #0b76ff;
+  color: #fff;
+}
+#learnMoreBtn:hover { background-color: #085ec2; }
+
+/* Small screens: scroll inside modal comfortably */
+@media (max-width: 420px) {
+  #popupBox { padding: 16px; width: min(96%, 380px); }
+  #popupBox h2 { font-size: 1.15rem; }
+  #popupBox p { font-size: 0.98rem; }
+}
+</style>
 </head>
-<body style="background-color: white;">
+<body>
+<div id="popupOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Announcement">
+  <div id="popupBox" role="document">
+    <h2>Christmas Event 2025</h2>
+    <p>Join our APSC Christmas & New Year Celebration! <br><br>Food • Games • Prizes • Fun <br><br> @ Room 1008 on December 19, 2025 </p >
+
+    <img id="popupImg" src="Christmas-Party.png" alt="APSC Christmas Event Poster">
+
+    <div id="popupButtons" role="toolbar" aria-label="Popup actions">
+      <button id="popupClose" aria-label="Close popup">Close</button>
+      <a id="learnMoreBtn" aria-label="Learn more" href="Christmas2025.html">Learn More</a>
+    </div>
+  </div>
+</div>
+</div>
   <div class="top-image">
     <img src="b1ca26e0b6ac17b05a02e913ecb2f629.jpg" alt="Top Image">
     <div class="logo-bar">
@@ -60,5 +182,37 @@
       </div>
       </div>
     </div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const overlay = document.getElementById("popupOverlay");
+    const closeBtn = document.getElementById("popupClose");
+    const closeBtn2 = document.getElementById("popupClose2");
+    const learnBtn = document.getElementById("learnMoreBtn");
+
+    // Check if popup has already been shown
+    const hasShown = localStorage.getItem("apsc_popup_shown");
+
+    if (!hasShown) {
+      setTimeout(() => {
+        overlay.style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }, 400);
+    }
+
+    function hidePopup() {
+      overlay.style.display = "none";
+      document.body.style.overflow = "";
+      localStorage.setItem("apsc_popup_shown", "yes"); // Mark as shown
+    }
+
+    closeBtn.onclick = hidePopup;
+    closeBtn2.onclick = hidePopup;
+
+    learnBtn.onclick = () => {
+      localStorage.setItem("apsc_popup_shown", "yes");
+      window.location.href = "announcements.html";
+    };
+  });
+</script>
   </body>
 </html>
