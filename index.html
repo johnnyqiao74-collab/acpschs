@@ -3,216 +3,612 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Asian Peer Support Club</title>
-  <link rel="stylesheet" href="style.css">
+  <title>APSC Christmas Celebration</title>
   <style>
-/* ====== Popup Overlay (Background) ====== */
-#popupOverlay {
-  display: none; /* JS 会 set to "flex" */
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.45); /* 半透明黑遮罩 */
-  backdrop-filter: blur(6px); /* 背景模糊 */
-  z-index: 1000;
-  display: flex;            /* 当 JS 切换为 flex 时，这些 flex 属性会生效 */
-  justify-content: center;
-  align-items: center;
-  padding: 20px;            /* 保证移动端有内边距 */
-  box-sizing: border-box;
-}
+    /* ========= 全局重置 + 圣诞主题基础样式 ========= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* ====== Popup Box ====== */
-#popupBox {
-  background: rgba(255, 255, 255, 0.88); /* 半透明白色毛玻璃 */
-  backdrop-filter: blur(10px);
-  border-radius: 18px;
-  padding: 20px;
-  width: min(92%, 440px); /* 最大宽度 440px，移动端 92% */
-  max-height: 88vh;
-  overflow-y: auto;
-  box-shadow: 0 12px 40px rgba(9, 30, 66, 0.18);
-  font-family: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
-  animation: popupFadeIn 0.34s cubic-bezier(.2,.9,.2,1);
-  box-sizing: border-box;
-}
+    body {
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+      background: linear-gradient(135deg, #8B0000 0%, #A52A2A 50%, #228B22 100%);
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-/* ====== Fade-in Animation ====== */
-@keyframes popupFadeIn {
-  from { opacity: 0; transform: translateY(6px) scale(0.985); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
+    /* ========= 圣诞雪花动画（核心氛围） ========= */
+    @keyframes xmas-snowfall {
+      0% {
+        transform: translateY(-10px) rotate(0deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
 
-/* ====== Title ====== */
-#popupBox h2 {
-  margin: 0 0 8px 0;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #222;
-  text-align: center;
-}
+    .xmas-snowflake {
+      position: fixed;
+      top: -10px;
+      color: #fff;
+      font-size: 12px;
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 1;
+      animation: xmas-snowfall linear infinite;
+    }
 
-/* ====== Description Text ====== */
-#popupBox p {
-  margin: 0;
-  font-size: 0.98rem;
-  line-height: 1.5;
-  color: #444;
-  text-align: center;
-  margin-bottom: 12px;
-}
+    .xmas-snowflake:nth-child(1) { left: 5%; animation-duration: 8s; }
+    .xmas-snowflake:nth-child(2) { left: 15%; animation-duration: 10s; font-size: 14px; }
+    .xmas-snowflake:nth-child(3) { left: 25%; animation-duration: 7s; }
+    .xmas-snowflake:nth-child(4) { left: 35%; animation-duration: 9s; font-size: 16px; }
+    .xmas-snowflake:nth-child(5) { left: 45%; animation-duration: 8.5s; }
+    .xmas-snowflake:nth-child(6) { left: 55%; animation-duration: 11s; }
+    .xmas-snowflake:nth-child(7) { left: 65%; animation-duration: 7.5s; font-size: 14px; }
+    .xmas-snowflake:nth-child(8) { left: 75%; animation-duration: 9.5s; }
+    .xmas-snowflake:nth-child(9) { left: 85%; animation-duration: 8s; }
+    .xmas-snowflake:nth-child(10) { left: 95%; animation-duration: 10.5s; font-size: 16px; }
 
-/* ====== Poster Image (Below Text) ====== */
-#popupImg {
+    /* ========= 圣诞弹窗样式（全新命名） ========= */
+    #xmas-popup-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    #xmas-popup-box {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 25px;
+      width: min(92%, 480px);
+      max-height: 88vh;
+      overflow-y: auto;
+      box-shadow: 0 15px 40px rgba(139, 0, 0, 0.3);
+      border: 2px solid #FFD700;
+      animation: xmas-popup-fadein 0.4s cubic-bezier(.2,.9,.2,1);
+    }
+
+    @keyframes xmas-popup-fadein {
+      from { opacity: 0; transform: translateY(10px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    #xmas-popup-box h2 {
+      margin: 0 0 12px 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #8B0000;
+      text-align: center;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    #xmas-popup-box p {
+      margin: 0 0 15px 0;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #333;
+      text-align: center;
+    }
+
+    #xmas-popup-img {
+      width: 100%;
+      height: auto;
+      max-height: 50vh;
+      object-fit: cover;
+      border-radius: 15px;
+      margin: 15px 0;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      border: 2px solid #FFD700;
+    }
+
+    #xmas-popup-btns {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    #xmas-popup-close, #xmas-learn-more {
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    #xmas-popup-close {
+      background-color: #f8f8f8;
+      color: #8B0000;
+      border: 1px solid #ddd;
+    }
+
+    #xmas-popup-close:hover {
+      background-color: #eee;
+      transform: translateY(-2px);
+    }
+
+    #xmas-learn-more {
+      background-color: #8B0000;
+      color: #fff;
+      border: 1px solid #A52A2A;
+    }
+
+    #xmas-learn-more:hover {
+      background-color: #A52A2A;
+      transform: translateY(-2px);
+    }
+
+    /* ========= 顶部圣诞横幅（优化Logo尺寸） ========= */
+    .xmas-top-banner {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+    }
+
+    .xmas-top-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.8);
+    }
+
+    /* 圣诞彩灯装饰层 */
+    .xmas-top-banner::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(transparent 0%, rgba(255, 215, 0, 0.1) 100%);
+      pointer-events: none;
+    }
+
+    /* Logo容器（居中+适配） */
+    .xmas-logo-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 999;
+      width: 100%;
+      max-width: auto;
+    }
+
+    .xmas-logo-link {
+      display: inline-block;
+    }
+
+    /* Logo图片（核心优化：尺寸精准控制） */
+    .xmas-logo-img {
+      width: 150px;
+      max-width: auto; /* 桌面端Logo宽度 */
+      height: auto;
+      padding: 8px;
+      z-index: 1000;
+    }
+
+    /* ========= 圣诞主题头部标题 ========= */
+    .xmas-hero-header {
+      background: rgba(139, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      text-align: center;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      border-bottom: 3px solid #FFD700;
+    }
+
+    /* ========= 主内容容器 ========= */
+    .xmas-main-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* 圣诞导航栏（全新Class） */
+    .xmas-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
+      border: 2px solid #FFD700;
+    }
+
+    .xmas-nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      background: rgba(139, 0, 0, 0.6);
+    }
+
+    .xmas-nav a:hover {
+      background: #FFD700;
+      color: #8B0000;
+      transform: translateY(-2px);
+    }
+
+    /* 圣诞内容区块 */
+    .xmas-content-section {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+      border: 2px solid #FFD700;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .xmas-content-section h2 {
+      color: #FFD700;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .xmas-content-section p {
+      line-height: 1.8;
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+    }
+
+    .xmas-content-section strong {
+      color: #FFD700;
+    }
+
+    /* 圣诞图片轮播 */
+    .xmas-img-carousel {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding: 10px 0 20px 0;
+      scrollbar-color: #FFD700 #8B0000;
+    }
+
+    .xmas-img-carousel::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .xmas-img-carousel::-webkit-scrollbar-thumb {
+      background: #FFD700;
+      border-radius: 4px;
+    }
+
+    .xmas-carousel-item {
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 15px;
+      border: 3px solid #FFD700;
+      transition: transform 0.3s ease;
+    }
+
+    .xmas-carousel-item:hover {
+      transform: scale(1.05);
+    }
+
+    /* 圣诞社交链接区 */
+    .xmas-social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .xmas-social-links img {
+      width: 70px;
+      height: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .xmas-social-links img:hover {
+      transform: rotate(10deg) scale(1.1);
+    }
+
+    /* ========= 移动端精准适配 ========= */
+    @media (max-width: 768px) {
+      .xmas-top-banner {
+        height: 200px;
+      }
+
+      /* 移动端Logo缩小 */
+      .xmas-logo-img {
+        max-width: 150px;
+        padding: 6px;
+      }
+
+      .xmas-hero-header {
+        font-size: 1.4rem;
+        padding: 15px;
+      }
+
+      .xmas-nav {
+        gap: 10px;
+        padding: 10px;
+      }
+
+      .xmas-nav a {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+      }
+
+      .xmas-content-section {
+        padding: 20px;
+      }
+
+      .xmas-content-section h2 {
+        font-size: 1.5rem;
+      }
+
+      .xmas-carousel-item {
+        width: 250px;
+        height: 180px;
+      }
+
+      #xmas-popup-box {
+        padding: 20px;
+        width: min(96%, 400px);
+      }
+
+      #xmas-popup-box h2 {
+        font-size: 1.2rem;
+      }
+
+      #xmas-popup-box p {
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 420px) {
+      /* 小屏移动端Logo进一步缩小 */
+      .xmas-logo-img {
+        max-width: 150px;
+        padding: 5px;
+      }
+
+      .xmas-hero-header {
+        font-size: 1.2rem;
+      }
+
+      .xmas-content-section {
+        padding: 15px;
+      }
+
+      .xmas-carousel-item {
+        width: 200px;
+        height: 150px;
+      }
+
+      .xmas-social-links img {
+        width: 60px;
+      }
+    }
+    .xmas-top-banner {
+  position: relative;
   width: 100%;
-  height: auto;
-  max-height: 50vh;      /* 限制图片最大高度，避免过高 */
+  height: 300px;
+  overflow: hidden;
+}
+
+.xmas-top-banner img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 12px;
-  margin-top: 10px;
-  margin-bottom: 14px;
-  box-shadow: 0 8px 26px rgba(9, 30, 66, 0.12);
-  display: block;
+  filter: brightness(0.8); /* 保留原有亮度调整 */
 }
 
-/* ====== Buttons Container ====== */
-#popupButtons {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 6px;
+/* 顶部横幅渐变膜（新增/修改） */
+.xmas-top-banner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* 圣诞红→透明渐变（从上到下），opacity 0.4 控制膜的深浅 */
+  background: linear-gradient(to bottom, rgba(255, 215, 0, 0.1), rgba(139, 0, 0, 0.4));
+  pointer-events: none; /* 不遮挡Logo点击 */
+  z-index: 1; /* 确保在图片上方、Logo下方 */
+}
+/* 轮播图片容器（新增，若已有则补充relative） */
+.xmas-carousel-wrap {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
 }
 
-/* ====== Buttons ====== */
-#popupClose, #learnMoreBtn {
-  padding: 9px 16px;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
+.xmas-carousel-item {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  border: 3px solid #FFD700;
+  transition: transform 0.3s ease;
 }
 
-/* Close button */
-#popupClose {
-  background-color: #f0f0f0;
-  color: #222;
+/* 轮播图片渐变膜（新增） */
+.xmas-carousel-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* 金色渐变膜（从右下到左上，透明度0.25） */
+  background: linear-gradient(135deg, transparent 60%, rgba(255, 215, 0, 0.25));
+  pointer-events: none;
+  border-radius: 15px; /* 与图片圆角一致 */
 }
-#popupClose:hover { background-color: #e6e6e6; }
 
-/* Learn More button */
-#learnMoreBtn {
-  background-color: #0b76ff;
-  color: #fff;
+/* 轮播容器hover时渐变膜加深（可选增强交互） */
+.xmas-carousel-wrap:hover::after {
+  background: linear-gradient(135deg, transparent 60%, rgba(255, 215, 0, 0.4));
 }
-#learnMoreBtn:hover { background-color: #085ec2; }
-
-/* Small screens: scroll inside modal comfortably */
-@media (max-width: 420px) {
-  #popupBox { padding: 16px; width: min(96%, 380px); }
-  #popupBox h2 { font-size: 1.15rem; }
-  #popupBox p { font-size: 0.98rem; }
-}
-</style>
+  </style>
 </head>
 <body>
-<div id="popupOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Announcement">
-  <div id="popupBox" role="document">
-    <h2>Christmas Event 2025</h2>
-    <p>Join our APSC Christmas & New Year Celebration! <br><br>Food • Games • Prizes • Fun <br><br> @ Room 1008 on December 19, 2025 </p >
+  <!-- 圣诞雪花元素 -->
+  <div class="xmas-snowflake">❄</div>
+  <div class="xmas-snowflake">❅</div>
+  <div class="xmas-snowflake">✧</div>
+  <div class="xmas-snowflake">❆</div>
+  <div class="xmas-snowflake">❄</div>
+  <div class="xmas-snowflake">❅</div>
+  <div class="xmas-snowflake">✧</div>
+  <div class="xmas-snowflake">❆</div>
+  <div class="xmas-snowflake">❄</div>
+  <div class="xmas-snowflake">❅</div>
 
-    <img id="popupImg" src="Christmas-Party.png" alt="APSC Christmas Event Poster">
-
-    <div id="popupButtons" role="toolbar" aria-label="Popup actions">
-      <button id="popupClose" aria-label="Close popup">Close</button>
-      <a id="learnMoreBtn" aria-label="Learn more" href="Christmas2025.html">Learn More</a>
+  <!-- 圣诞活动弹窗（全新ID/Class） -->
+  <div id="xmas-popup-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Christmas Announcement">
+    <div id="xmas-popup-box" role="document">
+      <h2>🎄 Christmas Event 2025 🎄</h2>
+      <p>Join our APSC Christmas & New Year Celebration! <br><br>
+        🎁 Food • 🎮 Games • 🎯 Prizes • 🥳 Fun <br><br>
+        📍 @ Room 1008 on December 19, 2025 
+      </p>
+      <img id="xmas-popup-img" src="Christmas-Party.png" alt="APSC Christmas Event Poster">
+      <div id="xmas-popup-btns" role="toolbar" aria-label="Popup actions">
+        <button id="xmas-popup-close" aria-label="Close popup">Close</button>
+        <a id="xmas-learn-more" aria-label="Learn more" href="Christmas2025.html">🎅 Learn More</a>
+      </div>
     </div>
   </div>
-</div>
-</div>
-  <div class="top-image">
-    <img src="b1ca26e0b6ac17b05a02e913ecb2f629.jpg" alt="Top Image">
-    <div class="logo-bar">
-      <a href="index.html" class="logo-link" aria-label="Home">
-        <img src="apsc-logo-image.png" alt="APSC Logo" class="logo-img">
+
+  <!-- 顶部圣诞横幅（优化Logo） -->
+  <div class="xmas-top-banner">
+    <img src="b1ca26e0b6ac17b05a02e913ecb2f629.jpg" alt="Christmas Top Image">
+    <div class="xmas-logo-container">
+      <a href="index.html" class="xmas-logo-link" aria-label="Home">
+        <img src="Gold-APSC.png" alt="APSC Logo" class="xmas-logo-img">
       </a>
     </div>
   </div>
 
+  <!-- 圣诞主题头部标题 -->
+  <div class="xmas-hero-header">
+    <span>🎄 ASIAN PEER SUPPORT CLUB 🎄</span>
+  </div>
 
-    <div class="blur-header" style="font-weight: bold;">
-      <span>ASIAN PEER SUPPORT CLUB</span>
-    </div>
-    <div class="main-content">
-      <nav class="nav-menu">
-        <a href="about.html">About Us</a>
-        <a href="meetings.html">Meetings</a>
-        <a href="support.html">Get Support</a>
-        <a href="contact.html">Contact Us</a>
-        <a href="announcements.html">Announcements</a>
-        <a href="messageboard.html">Message Board</a>
-      </nav>
-      <div class="section">
-        <h2>Welcome</h2>
-        <p>
-          Our club is dedicated to building bridges between cultures and helping students from all backgrounds feel at home in our school community. We focus on <strong>cultural adjustment and adaptation</strong>, <strong>language exchange</strong>, and <strong>academic and life support</strong> for international students. Through activities like <strong>cross-cultural social events</strong>, <strong>holiday celebrations</strong>, and <strong>team-building workshops</strong>, we aim to create a welcoming space where everyone can share, learn, and grow together.
-        </p>
-        <p>
-          Whether you want to improve your English or Chinese, learn about different cultures, or simply make new friends, our club is the perfect place to connect and belong.
-        </p>
+  <!-- 主内容容器 -->
+  <div class="xmas-main-wrapper">
+    <nav class="xmas-nav">
+      <a href="about.html">🎁 About Us</a>
+      <a href="meetings.html">🎅 Meetings</a>
+      <a href="support.html">❄ Get Support</a>
+      <a href="contact.html">🎀 Contact Us</a>
+      <a href="announcements.html">🎯 Announcements</a>
+      <a href="messageboard.html">✨ Message Board</a>
+      <a href="Christmas2025.html">🎄 Xmas 2025</a>
+    </nav>
 
-        <p style="font-family: 'Noto Serif SC', serif; margin-top: 1.5em;">
-          本俱乐部致力于搭建文化交流的桥梁，帮助来自不同背景的学生更好地适应校园生活，融入集体。我们主要关注<strong>文化适应与交流</strong>、<strong>语言互助</strong>以及<strong>学业和生活支持</strong>。通过举办<strong>跨文化活动</strong>、<strong>节日庆祝</strong>和<strong>团队建设工作坊</strong>等活动，我们希望为每一位成员提供一个温暖、开放、包容的交流平台，让大家在学习与分享中共同成长。
-        </p>
-        <p style="font-family: 'Noto Serif SC', serif;">
-          无论你想提高英语或中文水平、了解不同文化，还是想结识更多朋友，这里都是你的理想之地。
-        </p>
+    <div class="xmas-content-section">
+      <h2>🎄 Welcome</h2>
+      <p>
+        Our club is dedicated to building bridges between cultures and helping students from all backgrounds feel at home in our school community. This Christmas, we focus on <strong>cultural adjustment and adaptation</strong>, <strong>language exchange</strong>, and <strong>academic and life support</strong> for international students. Through festive activities like <strong>cross-cultural social events</strong>, <strong>holiday celebrations</strong>, and <strong>team-building workshops</strong>, we aim to create a warm Christmas atmosphere where everyone can share, learn, and grow together.
+      </p>
+      <p>
+        Whether you want to improve your English or Chinese, learn about different Christmas traditions around the world, or simply make new friends, our club is the perfect place to connect and belong this holiday season.
+      </p>
+      <p style="font-family: 'Noto Serif SC', serif; margin-top: 1.5em;">
+        本俱乐部致力于搭建文化交流的桥梁，帮助来自不同背景的学生更好地适应校园生活，融入集体。这个圣诞节，我们主要关注<strong>文化适应与交流</strong>、<strong>语言互助</strong>以及<strong>学业和生活支持</strong>。通过举办充满节日氛围的<strong>跨文化活动</strong>、<strong>圣诞庆祝</strong>和<strong>团队建设工作坊</strong>等活动，我们希望为每一位成员提供一个温暖、开放、包容的交流平台，让大家在圣诞季的学习与分享中共同成长。
+      </p>
+      <p style="font-family: 'Noto Serif SC', serif;">
+        无论你想提高英语或中文水平、了解世界各地的圣诞传统，还是想结识更多朋友，这个节日季，这里都是你的理想之地。
+      </p>
 
-        <div class="image-carousel">
-          <img src="66f035997100c4bb53988637c20ff761.jpg" alt="Club Activity 1" class="carousel-img">
-          <img src="79932911ad52aa00b1ad5c8da580cf83.jpg" alt="Club Activity 2" class="carousel-img">
-          <img src="913164d2ede83efbd30f8d71dc7c7659.jpg" alt="Club Activity 3" class="carousel-img">
-        </div>
-        <div class="social-row">
+      <!-- 圣诞图片轮播 -->
+      <div class="xmas-img-carousel">
+        <img src="66f035997100c4bb53988637c20ff761.jpg" alt="Club Christmas Activity 1" class="xmas-carousel-item">
+        <img src="79932911ad52aa00b1ad5c8da580cf83.jpg" alt="Club Christmas Activity 2" class="xmas-carousel-item">
+        <img src="913164d2ede83efbd30f8d71dc7c7659.jpg" alt="Club Christmas Activity 3" class="xmas-carousel-item">
+      </div>
+
+      <!-- 圣诞社交链接 -->
+      <div class="xmas-social-links">
         <a href="https://www.instagram.com/apsc_chs/" target="_blank">
           <img src="ig_bw_logo.png" alt="Instagram">
         </a>
         <a href="mailto:apscchs.1@gmail.com">
-          <img src="gmail_bw_logo.png" alt="gmail" style="width:80px;">
+          <img src="gmail_bw_logo.png" alt="gmail" style="width:105px;">
         </a>
       </div>
-      </div>
     </div>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const overlay = document.getElementById("popupOverlay");
-    const closeBtn = document.getElementById("popupClose");
-    const closeBtn2 = document.getElementById("popupClose2");
-    const learnBtn = document.getElementById("learnMoreBtn");
+  </div>
 
-    // Check if popup has already been shown
-    const hasShown = localStorage.getItem("apsc_popup_shown");
+  <!-- 弹窗逻辑脚本（适配新ID） -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const overlay = document.getElementById("xmas-popup-overlay");
+      const closeBtn = document.getElementById("xmas-popup-close");
+      const learnBtn = document.getElementById("xmas-learn-more");
+      
+      // 5分钟毫秒数
+      const FIVE_MINUTES = 300000;
+      const lastPopupTime = localStorage.getItem("apsc_xmas_popup_timestamp");
+      const currentTime = Date.now();
+      const shouldShowPopup = !lastPopupTime || (currentTime - Number(lastPopupTime) > FIVE_MINUTES);
 
-    if (!hasShown) {
-      setTimeout(() => {
-        overlay.style.display = "flex";
-        document.body.style.overflow = "hidden";
-      }, 400);
-    }
+      if (shouldShowPopup) {
+        setTimeout(() => {
+          overlay.style.display = "flex";
+          document.body.style.overflow = "hidden";
+        }, 400);
+      }
 
-    function hidePopup() {
-      overlay.style.display = "none";
-      document.body.style.overflow = "";
-      localStorage.setItem("apsc_popup_shown", "yes"); // Mark as shown
-    }
+      function hidePopup() {
+        overlay.style.display = "none";
+        document.body.style.overflow = "";
+        localStorage.setItem("apsc_xmas_popup_timestamp", currentTime.toString());
+      }
 
-    closeBtn.onclick = hidePopup;
-    closeBtn2.onclick = hidePopup;
+      closeBtn.addEventListener('click', hidePopup);
+      learnBtn.addEventListener('click', () => {
+        localStorage.setItem("apsc_xmas_popup_timestamp", currentTime.toString());
+      });
 
-    learnBtn.onclick = () => {
-      localStorage.setItem("apsc_popup_shown", "yes");
-      window.location.href = "announcements.html";
-    };
-  });
-</script>
-  </body>
+      // 点击遮罩层关闭弹窗
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          hidePopup();
+        }
+      });
+    });
+  </script>
+
+  <div style=" text-align: center;
+  margin: 40px 0 20px;
+  font-size: 14px;
+  opacity: 0.8;">© 2025 Asian Peer Support Club</div>
+</body>
 </html>
