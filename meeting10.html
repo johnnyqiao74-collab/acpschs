@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Meeting10 (Xmas Celebration) - Asian Peer Support Club</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="APSC_LOGO.ico" type="image/x-icon">
+  <style>
+    /* 统一的媒体容器样式：保证图片/视频尺寸一致、比例不变 */
+    .media-container {
+      max-width: 800px; /* 可自定义最大宽度，越大显示越宽 */
+      width: 100%;      /* 响应式，小屏幕自动缩窄 */
+      aspect-ratio: 16/9; /* 统一16:9比例（视频原生比例） */
+      margin: 12px auto;  /* 居中显示，和原有间距一致 */
+      border-radius: 2px;
+      overflow: hidden;   /* 隐藏图片超出容器的部分（可选） */
+      position: relative; /* 辅助定位 */
+    }
+
+    /* 会议图片样式：填充容器，保持自身比例不拉伸 */
+    .meeting-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* 图片按比例填充容器（裁剪边缘），也可改用contain（留白不裁剪） */
+      object-position: center; /* 图片居中显示 */
+    }
+
+    /* YouTube视频样式：填充容器，保持16:9比例 */
+    .youtube-video {
+      width: 100%;
+      height: 100%;
+      border: none; /* 去掉默认边框 */
+    }
+  </style>
+</head>
+<body>
+  <div class="top-image">
+    <img src="b1ca26e0b6ac17b05a02e913ecb2f629.jpg" alt="Top Image">
+    <div class="logo-bar">
+      <a href="index.html" class="logo-link" aria-label="Home">
+        <img src="apsc-logo-image.png" alt="APSC Logo" class="logo-img">
+      </a>
+    </div>
+  </div>
+
+  <!-- 模糊标题栏（显示会议详情标题） -->
+  <div class="blur-header">
+    <span>10th Meeting (Xmas Celebration) Details</span>
+  </div>
+  <a href="meetings.html" class="back-link">← Back to Meeting Schedule</a>
+  
+  <!-- 会议详情内容 -->
+  <div class="main-content">
+    <div class="section">
+      <h2>10th Meeting (Xmas Celebration): December 19, 2025</h2>
+      <div class="meeting-details">
+        <p><strong>Date:</strong> December 19, 2025 (Friday)</p>
+        <p><strong>Time:</strong> Lunchtime</p>
+        <p><strong>Location:</strong> Room 1008</p>
+        <p><strong>Overview:</strong> Celebrating the upcoming Christmas, enjoying delicious food and interesting activities, and winning exciting prizes!</p>
+        <p><strong>Host:</strong> Johnny Q. (President)</p>
+        <p><strong>Notes:</strong> We have successfully held our 1st Christmas Celebration at CHS!</p>
+        
+        <!-- 图片板块：套入统一容器 -->
+        <p><strong>Picture(s):</strong> </p>
+        <div class="media-container">
+          <img src="efef0656630b4fcaba2e67eae21ace53.png" alt="Meeting Picture 1" class="meeting-photo">
+        </div>
+
+        <div class="media-container">
+          <img src="f107e2703e56f05e101a8f5db64d37a8.jpg" alt="Meeting Picture 2" class="meeting-photo">
+        </div>
+
+        <!-- 视频板块：套入统一容器 -->
+        <p><strong>Video:</strong> </p>
+        <div class="media-container">
+          <iframe class="youtube-video" src="https://www.youtube.com/embed/7rDKusI032c?si=ifgyaVmIH78dKG8T" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

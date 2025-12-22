@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>APSC Home page</title>
+  <title>Asian Peer Support Club</title>
   <link rel="icon" href="APSC_LOGO.ico" type="image/x-icon">
   <link rel="icon" href="APSC_LOGO.ico" type="image/x-icon">
   <style>
@@ -332,19 +332,36 @@
       overflow: hidden;
       scroll-snap-align: start;
       flex-shrink: 0;
+      /* 统一轮播项尺寸：和图片保持一致 */
+      width: 300px;
+      height: 200px;
     }
 
     .xmas-carousel-item {
-      width: 300px;
-      height: 200px;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       border-radius: 12px;
       border: 2px solid #FFD700;
       transition: transform 0.3s ease;
-      flex-shrink: 0;
     }
 
-    /* 轮播图片渐变膜（柔和不突兀） */
+    /* 轮播中的视频样式：和图片完全匹配 */
+    .xmas-carousel-video {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      border: 2px solid #FFD700;
+      transition: transform 0.3s ease;
+    }
+
+    /* 轮播项悬浮效果：图片和视频统一 */
+    .xmas-carousel-wrap:hover .xmas-carousel-item,
+    .xmas-carousel-wrap:hover .xmas-carousel-video {
+      transform: scale(1.02); /* 轻微缩放，和图片交互一致 */
+    }
+
+    /* 轮播图片/视频渐变膜（柔和不突兀） */
     .xmas-carousel-wrap::after {
       content: "";
       position: absolute;
@@ -355,6 +372,7 @@
       background: linear-gradient(135deg, transparent 60%, rgba(255, 215, 0, 0.2));
       pointer-events: none;
       border-radius: 12px;
+      z-index: 1;
     }
 
     .xmas-carousel-wrap:hover::after {
@@ -411,7 +429,8 @@
         margin-bottom: 20px;
       }
 
-      .xmas-carousel-item {
+      /* 移动端轮播项尺寸适配 */
+      .xmas-carousel-wrap {
         width: 250px;
         height: 180px;
       }
@@ -439,7 +458,8 @@
         padding: 20px;
       }
 
-      .xmas-carousel-item {
+      /* 小屏轮播项尺寸适配 */
+      .xmas-carousel-wrap {
         width: 220px;
         height: 160px;
       }
@@ -463,21 +483,6 @@
   <div class="xmas-snowflake">❄</div>
   <div class="xmas-snowflake">❅</div>
 
-  <!-- 圣诞活动弹窗（移除多余表情包） -->
-  <div id="xmas-popup-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Christmas Announcement">
-    <div id="xmas-popup-box" role="document">
-      <h2>Christmas Event 2025</h2>
-      <p>Join our APSC Christmas & New Year Celebration! <br><br>
-        Food • Games • Prizes • Fun <br><br>
-        Room 1008 | December 19, 2025 
-      </p>
-      <img id="xmas-popup-img" src="Christmas-Party.png" alt="APSC Christmas Event Poster">
-      <div id="xmas-popup-btns" role="toolbar" aria-label="Popup actions">
-        <button id="xmas-popup-close" aria-label="Close popup">Close</button>
-        <a id="xmas-learn-more" aria-label="Learn more" href="Christmas2025.html">Learn More</a>
-      </div>
-    </div>
-  </div>
 
   <!-- 顶部横幅 -->
   <div class="xmas-top-banner">
@@ -522,16 +527,18 @@
         无论你想提高英语或中文水平、了解世界各地的圣诞传统，还是想结识更多朋友，这个节日季，这里都是你的理想之地。
       </p>
 
-      <!-- 图片轮播 -->
+      <!-- 图片轮播（包含视频） -->
       <div class="xmas-img-carousel">
+        <!-- 轮播中的视频项 -->
         <div class="xmas-carousel-wrap">
-          <img src="66f035997100c4bb53988637c20ff761.jpg" alt="Club Christmas Activity 1" class="xmas-carousel-item">
+           <iframe class="xmas-carousel-video" src="https://www.youtube.com/embed/7rDKusI032c?si=ifgyaVmIH78dKG8T" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <!-- 轮播中的图片项 -->
+        <div class="xmas-carousel-wrap">
+          <img src="efef0656630b4fcaba2e67eae21ace53.png" alt="Club Christmas Activity 3" class="xmas-carousel-item">
         </div>
         <div class="xmas-carousel-wrap">
-          <img src="79932911ad52aa00b1ad5c8da580cf83.jpg" alt="Club Christmas Activity 2" class="xmas-carousel-item">
-        </div>
-        <div class="xmas-carousel-wrap">
-          <img src="913164d2ede83efbd30f8d71dc7c7659.jpg" alt="Club Christmas Activity 3" class="xmas-carousel-item">
+          <img src="f107e2703e56f05e101a8f5db64d37a8.jpg" alt="Club Christmas Activity 4" class="xmas-carousel-item">
         </div>
       </div>
 
@@ -556,43 +563,5 @@
     </div>
       <div style="text-align: center; margin: 40px 0 20px; font-size: 14px; opacity: 0.8; font-family: 'Roboto', sans-serif;">© 2025 Asian Peer Support Club</div>
   </div>
-
-  <!-- 弹窗逻辑脚本 -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const overlay = document.getElementById("xmas-popup-overlay");
-      const closeBtn = document.getElementById("xmas-popup-close");
-      const learnBtn = document.getElementById("xmas-learn-more");
-      
-      const FIVE_MINUTES = 300000;
-      const lastPopupTime = localStorage.getItem("apsc_xmas_popup_timestamp");
-      const currentTime = Date.now();
-      const shouldShowPopup = !lastPopupTime || (currentTime - Number(lastPopupTime) > FIVE_MINUTES);
-
-      if (shouldShowPopup) {
-        setTimeout(() => {
-          overlay.style.display = "flex";
-          document.body.style.overflow = "hidden";
-        }, 400);
-      }
-
-      function hidePopup() {
-        overlay.style.display = "none";
-        document.body.style.overflow = "";
-        localStorage.setItem("apsc_xmas_popup_timestamp", currentTime.toString());
-      }
-
-      closeBtn.addEventListener('click', hidePopup);
-      learnBtn.addEventListener('click', () => {
-        localStorage.setItem("apsc_xmas_popup_timestamp", currentTime.toString());
-      });
-
-      overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) {
-          hidePopup();
-        }
-      });
-    });
-  </script>
 </body>
 </html>
