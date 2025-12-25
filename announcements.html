@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements | APSC</title>
+    <link rel="icon" href="apsc_new_logo.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-blue: #0056D2;
+            --text-main: #1d1d1f;
+            --text-sub: #6e6e73;
+            --bg-body: #ffffff;
+            --border-color: #f5f5f7;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 语言切换 --- */
+        .lang-switcher {
+            background: #fff; padding: 12px 0; text-align: center; border-bottom: 1px solid var(--border-color);
+        }
+        .lang-btn {
+            background: none; border: none; font-size: 10px; font-weight: 600;
+            letter-spacing: 0.1em; color: var(--text-sub); margin: 0 10px;
+            cursor: pointer; transition: var(--transition);
+        }
+        .lang-btn.active { color: var(--brand-blue); }
+
+        /* --- 导航栏 --- */
+        nav {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-container {
+            max-width: 1300px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; padding: 12px 40px;
+            position: relative;
+        }
+        .nav-brand-link img { height: 35px; }
+        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-main); font-size: 13px; font-weight: 500; transition: var(--transition); }
+        .nav-links a:hover { color: var(--brand-blue); }
+        .btn-donate-nav { border: 1px solid var(--brand-blue); padding: 6px 15px; border-radius: 50px; color: var(--brand-blue) !important; }
+
+        /* --- 汉堡菜单 CSS --- */
+        .hamburger { display: none; cursor: pointer; width: 30px; height: 20px; position: relative; z-index: 1001; }
+        .hamburger span { display: block; width: 100%; height: 2px; background-color: var(--text-main); position: absolute; transition: var(--transition); border-radius: 2px; }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 9px; }
+        .hamburger span:nth-child(3) { top: 18px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg); top: 9px; }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
+
+        /* --- 搜索与工具栏 --- */
+        .controls-wrapper {
+            max-width: 900px; margin: 40px auto 0; padding: 0 40px;
+            display: flex; gap: 15px; flex-wrap: wrap;
+        }
+        .search-box {
+            flex: 1; min-width: 250px;
+            padding: 12px 20px; border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: #fbfbfd; font-family: inherit; font-size: 14px;
+            outline: none; transition: var(--transition);
+        }
+        .search-box:focus { border-color: var(--brand-blue); background: #fff; box-shadow: 0 0 0 4px rgba(0,86,210,0.05); }
+        
+        .sort-btn {
+            padding: 12px 20px; border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: #fbfbfd; cursor: pointer; font-size: 13px; font-weight: 600;
+            transition: var(--transition); color: var(--text-sub);
+        }
+        .sort-btn:hover { background: #fff; border-color: var(--brand-blue); color: var(--brand-blue); }
+
+        /* --- 主体内容 --- */
+        .wrapper { max-width: 900px; margin: 0 auto; padding: 60px 40px 100px; }
+        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-header h1 { font-size: 3.2rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 10px; }
+        .page-header p { color: var(--text-sub); font-size: 1.1rem; }
+
+        .announcement-list { display: flex; flex-direction: column; gap: 25px; }
+        .announcement-box {
+            background: #fbfbfd; border: 1px solid var(--border-color);
+            padding: 30px; border-radius: 22px; transition: var(--transition);
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .announcement-box:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.03); }
+        .date-tag { font-size: 11px; font-weight: 700; color: var(--brand-blue); letter-spacing: 0.05em; }
+        .announcement-text { font-size: 1.05rem; color: var(--text-main); font-weight: 500; }
+
+        /* --- Footer --- */
+        footer { padding: 60px 0; border-top: 1px solid var(--border-color); text-align: center; background: #fbfbfd; }
+        .social-icons { display: flex; justify-content: center; gap: 25px; margin-bottom: 20px; }
+        .social-icons img { width: 22px; height: 22px; filter: grayscale(1); opacity: 0.5; transition: var(--transition); }
+        .social-icons a:hover img { filter: grayscale(0); opacity: 1; transform: translateY(-3px); }
+        .footer-text { font-size: 11px; color: #aaa; letter-spacing: 0.05em; margin-bottom: 10px; }
+
+        .footer-legal {
+            margin-top: 10px;
+            font-size: 10px;
+            color: #aaa;
+        }
+        .footer-legal a {
+            color: #aaa;
+            text-decoration: none;
+            transition: var(--transition);
+            margin: 0 5px;
+        }
+        .footer-legal a:hover {
+            color: var(--brand-blue);
+        }
+        .footer-legal .separator {
+            color: #eee;
+            user-select: none;
+        }
+
+        /* --- 响应式设计 --- */
+        @media (max-width: 900px) {
+            .hamburger { display: block; }
+            .nav-links {
+                position: absolute; top: 100%; left: 0; width: 100%; background: rgba(255, 255, 255, 0.98); 
+                backdrop-filter: blur(20px); flex-direction: column; padding: 20px 0; gap: 0; opacity: 0; 
+                transform: translateY(-20px); pointer-events: none; transition: all 0.3s ease;
+            }
+            .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+            .nav-links a { display: block; padding: 18px 0; text-align: center; font-size: 16px; }
+            .btn-donate-nav { margin: 10px 40px; }
+            .page-header h1 { font-size: 2.2rem; }
+            .controls-wrapper { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLanguage('en')">ENGLISH</button>
+        <button class="lang-btn" onclick="setLanguage('zh-hans')">简体中文</button>
+        <button class="lang-btn" onclick="setLanguage('zh-hant')">繁體中文</button>
+        <button class="lang-btn" onclick="setLanguage('ko')">한국어</button>
+        <button class="lang-btn" onclick="setLanguage('ja')">日本語</button>
+        <button class="lang-btn" onclick="setLanguage('es')">ESPAÑOL</button>
+        <button class="lang-btn" onclick="setLanguage('fr')">FRANÇAIS</button>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand-link"><img src="APSC_LOGO.png" alt="APSC Logo"></a>
+            <div class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="index.html" data-key="nav-home">Home</a></li>
+                <li><a href="about.html" data-key="nav-about">About</a></li>
+                <li><a href="contact.html" data-key="nav-contact">Contact</a></li>
+                <li><a href="index.html#meeting-section" data-key="nav-meetings">Meetings</a></li>
+                <li><a href="announcements.html" data-key="nav-ann" style="color: var(--brand-blue);">Announcements</a></li>
+                <li><a href="guestbook.html" data-key="nav-feedback">Feedback</a></li>
+                <li><a href="index.html#support" class="btn-donate-nav" data-key="nav-donate">Donate</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="controls-wrapper">
+        <input type="text" class="search-box" id="searchInput" placeholder="Search announcements..." onkeyup="filterAnnouncements()">
+        <button class="sort-btn" id="sortBtn" onclick="toggleSort()" data-key="sort-new">Newest First ↑</button>
+    </div>
+
+    <main class="wrapper">
+        <header class="page-header">
+            <h1 data-key="page-title">Announcements</h1>
+            <p data-key="page-sub">Stay updated with the latest from APSC.</p>
+        </header>
+
+        <div class="announcement-list" id="announcementList"></div>
+    </main>
+
+   <footer>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/apsc_chs/" target="_blank"><img src="instagram_icon.png" alt="Instagram"></a>
+            <a href="https://www.tiktok.com/@asian.peer.support.club" target="_blank"><img src="tiktok_icon.png" alt="TikTok"></a>
+            <a href="https://youtube.com/@asianpeersupportclub" target="_blank"><img src="youtube_icon.png" alt="YouTube"></a>
+            <a href="https://www.facebook.com/share/1JPeJSg5Lu/" target="_blank"><img src="facebook_icon.png" alt="Facebook"></a>
+        </div>
+        <p class="footer-text">© 2025 ASIAN PEER SUPPORT CLUB | CLARKSBURG HIGH SCHOOL</p>
+        <div class="footer-legal">
+            <a href="Privacy_Policy.html" data-key="legal-privacy">Privacy Policy</a>
+            <span class="separator">|</span>
+            <a href="Terms_of_Use.html" data-key="legal-terms">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script>
+        // --- 汉堡菜单逻辑 ---
+        const hamburger = document.getElementById('hamburger-btn');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // --- 数据定义 ---
+        const announcementsData = [
+            { id: 1, date: '10/15/2025', keys: { en: 'Welcome to APSC! We are excited to kick off the new school year with events and meetings.', 'zh-hans': '欢迎来到 APSC！我们很高兴能以一系列活动开启新的学年。', 'zh-hant': '歡迎來到 APSC！我們很高興能以一系列活動開啟新的學年。', ko: 'APSC에 오신 것을 환영합니다! 새로운 학기를 다양한 이벤트와 함께 시작하게 되어 기쁩니다.', ja: 'APSCへようこそ！新しい学年度をイベントやミーティングで始めることができ、ワクワクしています。', es: '¡Bienvenidos a APSC! Estamos emocionados de comenzar el nuevo año escolar con eventos y reuniones.', fr: 'Bienvenue à l\'APSC ! Nous sommes ravis de commencer la nouvelle année scolaire avec des événements.' } },
+            { id: 2, date: '10/16/2025', keys: { en: 'No meeting next Monday (Holiday). Next meeting: Oct 27, 2025, at lunchtime in Room 1008.', 'zh-hans': '下周一为放假日，无会议。下次会议：10月27日午餐时间，1008教室。', 'zh-hant': '下週一為放假日，無會議。下次會議：10月27日午餐時間，1008教室。', ko: '다음 주 월요일은 휴교일이므로 모임이 없습니다. 다음 모임: 10월 27일 점심시간, 1008호.', ja: '来週の月曜日は休日のためミーティングはありません。次回：10月27日昼休み、1008号室。', es: 'No habrá reunión el próximo lunes. Próxima reunión: 27 de octubre, 1008.', fr: 'Pas de réunion lundi prochain. Prochaine réunion : 27 oct., salle 1008.' } },
+            { id: 3, date: '10/27/2025', keys: { en: 'Great meeting! We introduced Chinese characters, grammar, and pinyin. Thanks for attending!', 'zh-hans': '会议很成功！我们介绍了汉字、语法和拼音。感谢参与！', 'zh-hant': '會議很成功！我們介紹了漢字、語法和拼音。感謝參與！', ko: '오늘 모임은 훌륭했습니다! 한자, 문법, 병음을 소개했습니다. 참석해 주셔서 감사합니다!', ja: '素晴らしいミーティングでした！漢字、文法、ピンインを紹介しました。参加ありがとう！', es: '¡Gran reunión! Introdujimos caracteres chinos, gramática y pinyin. ¡Gracias por asistir!', fr: 'Excellente réunion ! Nous avons introduit les caractères chinois, la grammaire et le pinyin.' } },
+            { id: 4, date: '10/27/2025', keys: { en: 'Welcome new member Maddox Cherry! We are thrilled to have you with us.', 'zh-hans': '欢迎新成员 Maddox Cherry 加入！很高兴你的加入。', 'zh-hant': '歡迎新成員 Maddox Cherry 加入！很高興你的加入。', ko: '새 멤버 Maddox Cherry를 환영합니다! 우리와 함께하게 되어 정말 기쁩니다.', ja: '新メンバーの Maddox Cherry さん、ようこそ！仲間が増えて嬉しいです。', es: '¡Bienvenido Maddox Cherry! Estamos encantados de tenerte con nosotros.', fr: 'Bienvenue au nouveau membre Maddox Cherry ! Nous sommes ravis de vous avoir.' } },
+            { id: 5, date: '10/31/2025', keys: { en: 'No meeting next Monday. Next meeting: Nov 10, 2025, in Room 1008.', 'zh-hans': '下周一无会议。下次会议：11月10日，1008教室。', 'zh-hant': '下週一無會議。下次會議：11月10日，1008教室。', ko: '다음 주 월요일은 모임이 없습니다. 다음 모임: 11월 10일, 1008호.', ja: '来週の月曜日はミーティングなし。次回：11月10日、1008号室。', es: 'Sin reunión el próximo lunes. Próxima reunión: 10 de nov., sala 1008.', fr: 'Pas de réunion lundi prochain. Prochaine réunion : 10 nov., salle 1008.' } },
+            { id: 6, date: '11/09/2025', keys: { en:'Reminder: Fifth Meeting Tomorrow! We will discuss the Attendance System. All are welcome!' , 'zh-hans':'提醒：明天举行第5次会议！我们将讨论考勤系统。欢迎大家！' , 'zh-hant':'提醒：明天舉行第5次會議！我們將討論考勤系統。歡迎大家！' , 'ko':'알림: 내일 제5차 모임이 있습니다! 출석 시스템을 논의할 예정입니다. 모두 환영합니다!' , ja:'お知らせ：明日は第5回会議です! 出席システムについて話し合います。誰でも歓迎します!' , es:'Recordatorio: ¡Quinta reunión mañana! Discutiremos el sistema de asistencia.' , fr:'Rappel: Cinquième réunion demain! Nous discuterons du système d\'assiduité.' } },
+            { id: 7, date: '11/10/2025', keys: { en: 'Thanks for attending! We discussed the Attendance System. Next meeting: Nov 17.', 'zh-hans': '感谢参与！我们讨论了考勤系统。下次会议：11月17日。', 'zh-hant': '感謝參與！我們討論了考勤系統。下次會議：11月17日。', ko: '참석해 주셔서 감사합니다! 출석 시스템을 논의했습니다. 다음 모임: 11월 17일.', ja: '参加ありがとう！出席システムについて话しました。次回：11月17日。', es: '¡Gracias por asistir! Hablamos de la asistencia. Próxima reunión: 17 de nov.', fr: 'Merci d\'être venus ! Prochaine réunion : 17 nov.' } },
+            { id: 8, date: '12/01/2025', keys: { en: 'Early release next Monday, so no meeting. Next meeting: Dec 01 (Monday) in Room 1008.', 'zh-hans': '下周一学生提前放学，无会议。下次会议：12月01日，1008教室。', 'zh-hant': '下週一學生提前放學，無會議。下次會議：12月01日，1008教室。', ko: '다음 주 월요일은 조기 하교로 모임이 없습니다. 다음 모임: 12월 01일, 1008호.', ja: '来週月曜は短縮授業のためなし。次回：12月01日、1008号室。', es: 'Salida temprana el lunes, sin reunión. Próxima: 01 de dic., sala 1008.', fr: 'Sortie anticipée lundi, pas de réunion. Prochaine : 01 déc., salle 1008.' } },
+            { id: 9, date: '12/09/2025', keys: { en: 'Holiday Event: Join our Christmas & New Year Celebration on Dec 19 in Room 1008! Food and prizes!', 'zh-hans': '节日活动：12月19日在1008教室举行圣诞及新年庆祝！有食物和奖品！', 'zh-hant': '節日活動：12月19日在1008教室舉行聖誕及新年慶祝！有食物和獎品！', ko: '홀리데이 이벤트: 12월 19일 1008호에서 크리스마스 & 새해 파티! 음식과 경품!', ja: 'ホリデーイベント：12月19日1008号室でクリスマス＆新年のお祝い！食事と景品あり！', es: 'Evento: ¡Celebración de Navidad y Año Nuevo el 19 de dic! ¡Comida y premios!', fr: 'Événement : Célébration de Noël et du Nouvel An le 19 déc. ! Nourriture et prix !' } },
+            { id: 10, date: '12/14/2025', keys: { en: 'School delay tomorrow (2h), but APSC 9th Meeting will still be held at lunch.', 'zh-hans': '明天学校延迟2小时上课，但 APSC 第9次会议仍将在午餐时间举行。', 'zh-hant': '明天學校延遲2小時上課，但 APSC 第9次會議仍將在午餐時間舉行。', ko: '내일 등교 지연(2시간)이 있지만, APSC 제9차 모임은 점심시간에 정상 진행됩니다.', ja: '明日は2時間の始業遅延ですが、APSC第9回会議は昼休みに開催します。', es: 'Retraso escolar mañana (2h), pero la 9ª reunión de APSC se hará en el almuerzo.', fr: 'Retard scolaire demain (2h), mais la 9ème réunion de l\'APSC aura lieu à midi.' } },
+            { id: 11, date: '12/14/2025', keys: { en: 'Warm reminder: Be careful during snowy weather. Stay safe!', 'zh-hans': '温馨提示：雪天路滑，请注意出行安全，保重身体！', 'zh-hant': '溫馨提示：雪天路滑，請注意出行安全，保重身體！', ko: '따뜻한 알림: 눈 오는 날씨에 조심하세요. 안전하게 다니세요!', ja: 'お知らせ：雪の日は足元に気をつけて。安全第一で！', es: 'Recordatorio: Ten cuidado con la nieve. ¡Mantente seguro!', fr: 'Rappel : Attention à la neige. Soyez prudents !' } },
+            { id: 12, date: '12/19/2025', keys: { en: 'Successful Christmas Celebration today! Looking forward to the next one!', 'zh-hans': '今天圣诞庆祝活动非常成功！期待下一次！', 'zh-hant': '今天聖誕慶祝活動非常成功！期待下一次！', ko: '성공적인 크리스마스 축제였습니다! 다음 축제를 기약합니다!', ja: 'クリスマスイベントは大成功！次回も楽しみです！', es: '¡Celebración navideña exitosa hoy!', fr: 'Célébration de Noël réussie !' } }
+        ];
+
+        const uiStrings = {
+            en: { 'nav-home': 'Home', 'nav-about': 'About', 'nav-contact': 'Contact', 'nav-meetings': 'Meetings', 'nav-ann': 'Announcements', 'nav-feedback': 'Feedback', 'nav-donate': 'Donate', 'page-title': 'Announcements', 'page-sub': 'Stay updated with the latest from APSC.', 'sort-new': 'Newest First ↑', 'sort-old': 'Oldest First ↓', 'search-ph': 'Search announcements...', 'legal-privacy': 'Privacy Policy', 'legal-terms': 'Terms of Use' },
+            'zh-hans': { 'nav-home': '首页', 'nav-about': '关于我们', 'nav-contact': '联系我们', 'nav-meetings': '会议安排', 'nav-ann': '公告通知', 'nav-feedback': '反馈', 'nav-donate': '捐赠支持', 'page-title': '公告通知', 'page-sub': '获取 APSC 的最新动态。', 'sort-new': '最新优先 ↑', 'sort-old': '最早优先 ↓', 'search-ph': '搜索公告内容...', 'legal-privacy': '隐私政策', 'legal-terms': '使用条款' },
+            'zh-hant': { 'nav-home': '首頁', 'nav-about': '關於我們', 'nav-contact': '聯絡我們', 'nav-meetings': '會議安排', 'nav-ann': '公告通知', 'nav-feedback': '反饋', 'nav-donate': '捐贈支持', 'page-title': '公告通知', 'page-sub': '獲取 APSC 的最新動態。', 'sort-new': '最新優先 ↑', 'sort-old': '最早優先 ↓', 'search-ph': '搜索公告內容...', 'legal-privacy': '隱私政策', 'legal-terms': '使用條款' },
+            'ko': { 'nav-home': '홈', 'nav-about': '정보', 'nav-contact': '연락처', 'nav-meetings': '회의 일정', 'nav-ann': '공지사항', 'nav-feedback': '피드백', 'nav-donate': '기부', 'page-title': '공지사항', 'page-sub': 'APSC의 최신 소식을 확인하세요.', 'sort-new': '최신순 ↑', 'sort-old': '오래된순 ↓', 'search-ph': '공지 검색...', 'legal-privacy': '개인정보 보호정책', 'legal-terms': '이용 약관' },
+            'ja': { 'nav-home': 'ホーム', 'nav-about': '詳細', 'nav-contact': 'お問い合わせ', 'nav-meetings': '会議日程', 'nav-ann': 'お知らせ', 'nav-feedback': '感想', 'nav-donate': '寄付', 'page-title': 'お知らせ', 'page-sub': 'APSCの最新情報をお届けします。', 'sort-new': '新しい順 ↑', 'sort-old': '古い順 ↓', 'search-ph': 'お知らせを検索...', 'legal-privacy': 'プライバシーポリシー', 'legal-terms': '利用規約' },
+            'es': { 'nav-home': 'Inicio', 'nav-about': 'Acerca de', 'nav-contact': 'Contacto', 'nav-meetings': 'Reuniones', 'nav-ann': 'Anuncios', 'nav-feedback': 'Comentarios', 'nav-donate': 'Donar', 'page-title': 'Anuncios', 'page-sub': 'Mantente al día con lo último de APSC.', 'sort-new': 'Nuevos primero ↑', 'sort-old': 'Antiguos primero ↓', 'search-ph': 'Buscar anuncios...', 'legal-privacy': 'Política de Privacidad', 'legal-terms': 'Términos de Uso' },
+           	'fr': {	'nav-home':'Accueil','nav-about':'À propos','nav-contact':'Contactez-nous','nav-ann':'Annonces','nav-feedback':'Avis','nav-donate':'Donner','page-title':'Annonces','page-sub':'Restez informé des nouveautés de l\'APSC.','sort-new':'Plus récents ↑','sort-old':'Plus anciens ↓','search-ph':'Chercher des annonces...' }
+        };
+
+        let currentLang = 'en';
+        let isAscending = false;
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.innerText.toLowerCase().includes(lang === 'zh-hans' ? '简体' : lang)));
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (uiStrings[lang][key]) el.innerText = uiStrings[lang][key];
+            });
+            document.getElementById('searchInput').placeholder = uiStrings[lang]['search-ph'];
+            render();
+        }
+
+        function render() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            let filtered = announcementsData.filter(item => 
+                item.keys[currentLang].toLowerCase().includes(searchTerm) || 
+                item.date.includes(searchTerm)
+            );
+            filtered.sort((a, b) => isAscending ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date));
+            const listEl = document.getElementById('announcementList');
+            listEl.innerHTML = filtered.map(item => `
+                <div class="announcement-box">
+                    <span class="date-tag">${item.date}</span>
+                    <p class="announcement-text">${item.keys[currentLang]}</p>
+                </div>
+            `).join('');
+        }
+
+        function toggleSort() {
+            isAscending = !isAscending;
+            const btn = document.getElementById('sortBtn');
+            btn.innerText = uiStrings[currentLang][isAscending ? 'sort-old' : 'sort-new'];
+            render();
+        }
+
+        function filterAnnouncements() { render(); }
+        window.onload = () => setLanguage('en');
+    </script>
+</body>
+</html>
